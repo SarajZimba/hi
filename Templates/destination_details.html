@@ -1,0 +1,95 @@
+{% extends 'base.html'%} {% load static %} {% static "images" as baseUrl %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/825b56df51.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/stroll-media.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <title>Destinations</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+
+    {% block content %}
+    <div class="first">
+        <h1 style="text-align: center;">{{destination.name}}</h1><br>
+        <div class="dest-full-detail" style="position:relative">
+            <div class="ig dest">
+                <img class="blog-img" src="{{destination.imageUrl}}" alt="" width="300" height="300" style="border-radius: 5px;">
+            </div>
+            <div style="width: 60px;"></div>
+            <div>
+                <h3><b>Starts From  $35</b></h3>
+            <br>
+            <p>{{destination.description}}</p>
+            </div>
+
+            <a href="{% url 'payment' destination.id %}"><button class="buy-button" style = "height:20px; background: #2c0037;position:absolute; bottom:20px; left:330px;color:white;">Buy</button></a>
+            
+        </div>
+        
+        
+        
+        <!-- <div class="cover">
+            <div class="blog-image"><img style="margin:10px;height: 50px;
+            width: 50px;
+            border-radius: 50%;" src="images/245lady.jpg" alt=""></div>
+            <div class="name">Charlotte Lucy</div>
+        </div> -->
+        <br>
+        <hr>
+        <br>
+        <!-- <h4 style="text-align:center">Get Directions</h4>
+        <div style= "display:flex;justify-content:center;padding:10px 0" class="direction"><iframe src="{{blogdata.iframe}}" frameborder="0"></iframe></div>
+        <hr>
+        <br> -->
+        <div style="background: rgb(238, 235, 235); padding: 10px;">
+            <h2 style="font-size: 30px;">Reviews</h2>
+        <div class="rev-block">
+            <div class="reviews_count">
+                Total Reviews: {{reviews_count}}
+            </div>
+
+            <div class="averge">
+                Average Rating: {{avg_reviews.rating__avg}}/5
+            </div>
+    
+            {% if count == 0 %}
+                <button class="rate-btn"><a href="{%url 'rating' destination.id%}">Rate this product</a></button>
+            {% endif %}
+        </div>
+        <hr>
+
+        
+
+        {% for review in reviews%}
+
+        <div class="review-main" style="margin-top: 25px;" aria-label="Review by {{review.user}} which says {{review.description}} and gives {{review.rating}} stars on {{review.created_at}}">
+            <div class="review-img">
+                <img src="{% static 'images/profile.png' %}" alt="" width="50" height="50">
+            </div>
+            <div class="review-body" style="margin-left: 20px;">
+                <p><strong>{{review.user}}</strong> <span style="font-size: 12px;">Posted at&nbsp;{{review.created_at}}</span></p>
+                <p>Review:- {{review.description}}</p>
+                <p>Rating:- {{review.rating}}/5</p>
+            </div>
+            {%if review.user == request.user %}
+                <button style="width: 80px; height: 30px; margin-left: 20px; background: #37002f;"><a href="{% url 'update_review' review.id%}" style="color: white;">Update</a></button>
+                <button style="width: 80px; height: 30px; margin-left: 20px; background: #db0054;"><a href="{% url 'delete_review' review.id%}" style="color: white;">Delete</a></button>
+                {% endif %}
+        </div>
+        {% endfor %}
+        </div>
+        
+        
+    {% endblock %}
+</body>
+</html>
