@@ -14,7 +14,7 @@
     {%include 'nav.html' %}
 
     {% block content %}
-    <h1 style="text-align: center;">Rate this Place</h1>
+    <h1 style="text-align: center;">Rate this Product</h1>
     <div style="padding: 40px;">
     <hr></div>
     <div class="rate-container" aria-label="Rate bhaktapur by adding a short review text and giving stars out of 5">
@@ -28,7 +28,7 @@
         <div class="rate-form-container">
             <form action="" method="POST">
                 {%csrf_token%}
-                <p>How was the place?</p>
+                <p>How was the product?</p>
                 {{form.description}}
                 <p>How many stars would you give?</p>
                 <div style="width: 100%;">

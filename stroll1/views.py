@@ -228,20 +228,40 @@ def mapsboudha(request):
      return render(request, 'mapsboudha.html')
      
 
+# def products(request):
+#      if request.user.is_authenticated:
+#         customer = request.user.customer    
+#         order, created = Order.objects.get_or_create(customer=customer, complete=False)
+       
+#         items = order.orderitem_set.all()
+#         cartItems = order.get_cart_items_number
+#      else:
+#         items =[]
+#         order = {'get_cart_total':0, 'get_cart_items_number':0, 'shipping': False}
+#         cartItems = order['get_cart_items_number']
+#      products = product.objects.all()
+#      context = {'products': products, 'cartItems': cartItems}
+#      return render(request, 'products.html', context)
+
+from .models import product, Category
+
 def products(request):
-     if request.user.is_authenticated:
+    if request.user.is_authenticated:
         customer = request.user.customer    
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
-       
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items_number
-     else:
-        items =[]
-        order = {'get_cart_total':0, 'get_cart_items_number':0, 'shipping': False}
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items_number': 0, 'shipping': False}
         cartItems = order['get_cart_items_number']
-     products = product.objects.all()
-     context = {'products': products, 'cartItems': cartItems}
-     return render(request, 'products.html', context)
+
+    # Group products by category
+    categories = Category.objects.all()
+    products_by_category = {category: product.objects.filter(category=category) for category in categories}
+
+    context = {'products_by_category': products_by_category, 'cartItems': cartItems}
+    return render(request, 'products.html', context)
 
 def update_item(request):
      data = json.loads(request.body)

@@ -101,10 +101,18 @@ class Rating(models.Model):
     def __str__(self):
         return f"{self.user}'s {self.rating}-star rating for {self.destination}"
     
+
+class Category(models.Model):
+    title = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+    
 class product(models.Model):
         name = models.CharField(max_length = 200, null=True, blank=True)
         price = models.FloatField(max_length = 200, null=True, blank=True)
         image = models.ImageField(null=True, blank=True)
+        category = models.ForeignKey(Category, models.CASCADE, null=True, blank=True)
         featured = models.BooleanField(default=False, null=True, blank=True )
 
         def __str__(self):
